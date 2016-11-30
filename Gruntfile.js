@@ -27,7 +27,10 @@ module.exports = function(grunt) {
 				"!js/tinymce/plugins/imagetools/plugin.js",
 				"!js/tinymce/plugins/wordcount/plugin.js",
 				"!js/tinymce/plugins/codesample/plugin.js",
-				"!js/tinymce/plugins/codesample/classes/Prism.js"
+				"!js/tinymce/plugins/codesample/classes/Prism.js",
+				"!js/tinymce/plugins/sidepanel/plugin.js",
+				"!js/tinymce/plugins/localfile/plugin.js",
+				"!js/tinymce/plugins/respec/plugin.js"
 			],
 
 			themes: [
@@ -210,6 +213,53 @@ module.exports = function(grunt) {
 					outputSource: "js/tinymce/plugins/codesample/plugin.js",
 					outputMinified: "js/tinymce/plugins/codesample/plugin.min.js",
 					outputDev: "js/tinymce/plugins/codesample/plugin.dev.js",
+					verbose: false,
+					expose: "public",
+					compress: true,
+
+					from: "Plugin.js"
+				}
+			},
+
+			"sidepanel-plugin": {
+				options: {
+					baseDir: "js/tinymce/plugins/sidepanel/classes",
+					rootNS: "tinymce.sidepanelplugin",
+					outputSource: "js/tinymce/plugins/sidepanel/plugin.js",
+					outputMinified: "js/tinymce/plugins/sidepanel/plugin.min.js",
+					outputDev: "js/tinymce/plugins/sidepanel/plugin.dev.js",
+					verbose: false,
+					expose: "public",
+					compress: true,
+
+					from: [	"ui/SidePanelHeader.js",
+						"Plugin.js"
+					]
+				}
+			},
+
+			"localfile-plugin": {
+				options: {
+					baseDir: "js/tinymce/plugins/localfile/classes",
+					rootNS: "tinymce.localfileplugins",
+					outputSource: "js/tinymce/plugins/localfile/plugin.js",
+					outputMinified: "js/tinymce/plugins/localfile/plugin.min.js",
+					outputDev: "js/tinymce/plugins/localfile/plugin.dev.js",
+					verbose: false,
+					expose: "public",
+					compress: true,
+
+					from: "Plugin.js"
+				}
+			},
+
+			"respec-plugin": {
+				options: {
+					baseDir: "js/tinymce/plugins/respec/classes",
+					rootNS: "tinymce.respecplugins",
+					outputSource: "js/tinymce/plugins/respec/plugin.js",
+					outputMinified: "js/tinymce/plugins/respec/plugin.min.js",
+					outputDev: "js/tinymce/plugins/respec/plugin.dev.js",
 					verbose: false,
 					expose: "public",
 					compress: true,
@@ -804,7 +854,10 @@ module.exports = function(grunt) {
 				"js/tinymce/plugins/**/*.dev.js",
 				"js/tinymce/plugins/table/plugin.js",
 				"js/tinymce/plugins/paste/plugin.js",
-				"js/tinymce/plugins/spellchecker/plugin.js"
+				"js/tinymce/plugins/spellchecker/plugin.js",
+				"js/tinymce/plugins/localfile/plugin.js",
+				"js/tinymce/plugins/respec/plugin.js",
+				"js/tinymce/plugins/sidepanel/plugin.js"
 			],
 
 			skins: [

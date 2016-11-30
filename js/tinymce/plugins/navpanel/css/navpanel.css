@@ -1,0 +1,34 @@
+.mce-nav-panel {
+  background: #ffffff;
+  overflow-x: hidden;
+}
+
+.mce-nav-panel ul {
+}
+
+.mce-nav-panel li {
+  list-style-type: none;
+  cursor: pointer;
+}
+.mce-nav-panel li.current {
+  background:lightgrey;
+}
+.mce-nav-panel ul li, .mce-nav-panel li.toc-h1 {
+  padding-left: 8px;
+}
+.mce-nav-panel ul ul li, .mce-nav-panel li.toc-h2 {
+  padding-left: 16px;
+}
+.mce-nav-panel ul ul ul li, .mce-nav-panel li.toc-h3 {
+  padding-left: 24px;
+}
+.mce-nav-panel ul ul ul ul li, .mce-nav-panel li.toc-h4 {
+  padding-left: 32px;
+}
+.mce-nav-panel ul ul ul ul ul li, .mce-nav-panel li.toc-h5 {
+  padding-left: 40px;
+}
+
+.mce-nav-panel ul ul ul ul ul ul li, .mce-nav-panel li.toc-h6 {
+  padding-left: 48px;
+}
