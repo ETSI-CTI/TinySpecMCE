@@ -46,6 +46,9 @@ define("tinymce/ui/TabPanel", [
 				$(activeTabElm).removeClass(this.classPrefix + 'active');
 				activeTabElm.setAttribute('aria-selected', "false");
 			}
+			if (idx >= this.items().length) {
+				return;
+			}
 
 			this.activeTabId = 't' + idx;
 

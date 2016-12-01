@@ -1,0 +1,85 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Example of the Document</title>
+<script type="text/javascript" src="js/tinymce/tinymce.dev.js"></script>
+<!--script type="text/javascript" src="js/tinymce/tinymce.min.js"></script-->
+<script type="text/javascript">
+var aaa=123;
+tinymce.init({
+    selector: "textarea#elm1",
+    theme: "modern",
+    width: "100%",
+    height: 300,
+    plugins: [
+         "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+         "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+         "localfile table contextmenu directionality emoticons template paste textcolor sidepanel navpanel typograf",
+         "tabulator respec"
+   ],
+   toolbar: "insertfile undo redo | styleselect | bold italic forecolor backcolor| alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | abbr link image | print preview fullpage docproperties", 
+   style_formats: [
+        {title: 'Header 1', block: 'h1'},
+        {title: 'Header 2', block: 'h2'},
+        {title: 'Header 3', block: 'h3'},
+        {title: 'Header 4', block: 'h4'},
+        {title: 'Header 5', block: 'h5'},
+        {title: 'Header 6', block: 'h6'},
+        {title: 'Normal',   block: 'p'},
+        {title: 'Abbreviation', inline: 'abbr'},
+   ],
+   file_browser_callback : 'myFileBrowser',
+   navpanel_show_on_start: true,
+   image_advtab: true
+ });
+
+  tinymce.each(tinymce.editors, function(e){
+  	e.on('savecontent', function(e){
+  		console.log('savecontent');
+  	});
+  });
+
+  function handleFileSelect(evt) {
+    var files = evt.target.files;
+  }
+
+function myFileBrowser (field_name, url, type, win) {
+   // Check for the various File API support.
+   if (window.File && window.FileReader && window.FileList && window.Blob) {
+     // Great success! All the File APIs are supported.
+   } else {
+      alert('The File APIs are not fully supported in this browser.');
+   }
+   // alert("Field_Name: " + field_name + "nURL: " + url + "nType: " + type + "nWin: " + win); // debug/testing
+   return false;
+}
+</script>
+</head>
+
+<body>
+<div><p id="fileToEdit">&nbsp;</p></div>
+<form method="post">
+    <textarea id="elm1" name="area">
+    <h1>header 1</h1>
+    <h2>header 2</h2>
+    <h3><a href="#"><span>header 3</span></a></h3>
+    <p>text text text text text text text text text text text text text text text text text text </p>
+    <p>text text text text text text text text text text text text text text text text text text </p>
+    <p>to be header 2</p>
+    <p>to be header 3</p>
+    <p>text text text text text text text text text text text text text text text text text text </p>
+    <h3>header 3</h3>
+    <p>text text text text text text text text text text text text text text text text text text </p>
+    <h1>header 1</h1>
+    <h2>header 2</h2>
+    <h3>header 3</h3>
+    <p>text text text text text text text text text text text text text text text text text text </p>
+    </textarea>
+</form>
+<div>
+<form method="post">
+    <input type="file" id="__XXX" name="files[]" style="display:none;"/>
+</form>
+</div>
+</body>
+</html>

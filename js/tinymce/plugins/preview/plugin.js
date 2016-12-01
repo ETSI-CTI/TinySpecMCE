@@ -13,11 +13,35 @@
 tinymce.PluginManager.add('preview', function(editor) {
 	var settings = editor.settings, sandbox = !tinymce.Env.ie;
 
+	function getWindowSize() {
+		var w, h, win = window, doc = document;
+		var body = doc.body;
+
+		// Old IE
+		if (body.offsetWidth) {
+			w = body.offsetWidth;
+			h = body.offsetHeight;
+		}
+
+		// Modern browsers
+		if (win.innerWidth && win.innerHeight) {
+			w = win.innerWidth;
+			h = win.innerHeight;
+		}
+
+		return {w: w, h: h};
+	}
+
 	editor.addCommand('mcePreview', function() {
+
+		var winSize = getWindowSize();
+		winSize.w = winSize.w * 4 / 5;
+		winSize.h = winSize.h * 4 / 5;
+		
 		editor.windowManager.open({
 			title: 'Preview',
-			width: parseInt(editor.getParam("plugin_preview_width", "650"), 10),
-			height: parseInt(editor.getParam("plugin_preview_height", "500"), 10),
+			width: parseInt(editor.getParam("plugin_preview_width", winSize.w), 10),
+			height: parseInt(editor.getParam("plugin_preview_height", winSize.h), 10),
 			html: '<iframe src="javascript:\'\'" frameborder="0"' + (sandbox ? ' sandbox="allow-scripts"' : '') + '></iframe>',
 			buttons: {
 				text: 'Close',
@@ -29,6 +53,12 @@ tinymce.PluginManager.add('preview', function(editor) {
 				var previewHtml, headHtml = '';
 
 				headHtml += '<base href="' + editor.documentBaseURI.getURI() + '">';
+
+				var args = {
+					headHtml: headHtml
+				};
+				editor.fire('PrepareHeadHtml', args);
+				headHtml = args.headHtml;
 
 				tinymce.each(editor.contentCSS, function(url) {
 					headHtml += '<link type="text/css" rel="stylesheet" href="' + editor.documentBaseURI.toAbsolute(url) + '">';
