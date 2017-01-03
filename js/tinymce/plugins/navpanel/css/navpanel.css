@@ -32,3 +32,12 @@
 .mce-nav-panel ul ul ul ul ul ul li, .mce-nav-panel li.toc-h6 {
   padding-left: 48px;
 }
+
+.mce-nav-panel .toc-h1 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.mce-nav-panel .toc-h2 {
+  font-size: 1.2em;
+}
