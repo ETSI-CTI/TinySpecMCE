@@ -15,7 +15,7 @@ tinymce.init({
          "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
          "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
          "localfile table contextmenu directionality emoticons template paste textcolor sidepanel navpanel typograf",
-         "tabulator respec"
+         "tabulator respec abbreviations"
    ],
    toolbar: "insertfile undo redo | styleselect | bold italic forecolor backcolor| alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | abbr link image | print preview fullpage docproperties", 
    style_formats: [
@@ -30,6 +30,7 @@ tinymce.init({
    ],
    file_browser_callback : 'myFileBrowser',
    navpanel_show_on_start: true,
+   abbrpanel_show_on_start: true,
    image_advtab: true
  });
 
@@ -60,21 +61,360 @@ function myFileBrowser (field_name, url, type, win) {
 <div><p id="fileToEdit">&nbsp;</p></div>
 <form method="post">
     <textarea id="elm1" name="area">
-    <h1>header 1</h1>
-    <h2>header 2</h2>
-    <h3><a href="#"><span>header 3</span></a></h3>
-    <p>text text text text text text text text text text text text text text text text text text </p>
-    <p>text text text text text text text text text text text text text text text text text text </p>
-    <p>to be header 2</p>
-    <p>to be header 3</p>
-    <p>text text text text text text text text text text text text text text text text text text </p>
-    <h3>header 3</h3>
-    <p>text text text text text text text text text text text text text text text text text text </p>
-    <h1>header 1</h1>
-    <h2>header 2</h2>
-    <h3>header 3</h3>
-    <p>text text text text text text text text text text text text text text text text text text </p>
-    </textarea>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+<script src='respec-etsi-debug.js' async class='remove'></script>
+<!-- <script src='http://ctilab.etsiqa.org/js/respec-etsi-debug.js' async class='remove'></script> -->
+<!-- <script src='https://www.w3.org/Tools/respec/respec-w3c-common' async class='remove'></script> -->
+<script class='remove'>
+      var respecConfig = {
+          wg:         "ITS",
+          specStatus: "WD",
+          specType:   "TS",
+          specIndex:  "102687",
+          subtitle:   "Access layer part",
+          specVersion:"1.1.1",
+          editors: [
+                {   name:       "ETSI Secretariat",
+                    url:        "http://www.etsi.org",
+                    company:    "ETSI",
+                    companyURL: "http://www.etsi.org/" }
+          ],
+          wgURI:        "http://www.etsi.org/index.php/technologies-clusters/technologies/intelligent-transport",
+          wgPublicList: "ITS",
+          wgPatentURI:  "https://portal.etsi.org/Portals/0/Users/224/24/224/IPR-call_35_directives_dec_2015.pdf",
+          publishDate : '2014-01-13'
+      };
+</script>
+<title>Decentralized Congestion Control Mechanisms for Intelligent Transport Systems operating in the 5 GHz range</title>
+</head>
+<body>
+<section id="abstract" class="introductory">
+<h1 id="hdr-azyduiemli7o0">Introduction</h1>
+<p>Decentralized congestion control (DCC) is a necessity in an <em>ad hoc</em> network. To be continued&hellip;</p>
+</section>
+<section>
+<h1 id="hdr-abto2ft0ha0zj">Scope</h1>
+<p>The present document provides means of controlling the data traffic injected to a frequency channel. More specifically, it specifies a DCC algorithm that can be used on all frequency channels contained in the frequency bands ITS-G5A, ITS-G5B, and ITS-G5D, and as required by ETSI EN 302 571. The algorithm can perform data traffic shaping of any upper layer protocol.</p>
+</section>
+<section>
+<h1 id="hdr-6gp8vs59yi30p">References</h1>
+<p>References are either specific (identified by date of publication and/or edition number or version number) or non‑specific. For specific references,only the cited version applies. For non-specific references, the latest version of the referenced document (including any amendments) applies.</p>
+<p>Referenced documents which are not found to be publicly available in the expected location might be found at <a href="http://docbox.etsi.org/Reference">http://docbox.etsi.org/Reference</a>.</p>
+<p class="NO">NOTE: While any hyperlinks included in this clause were valid at the time of publication, ETSI cannot guarantee their long term validity.</p>
+<section>
+<h2 id="hdr-9p1mqjht9py41">Normative references</h2>
+<p class="EX">[1]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ETSI EN 302 663 (V1.2.1): &ldquo;Intelligent Transport Systems (ITS): Access layer specification for Intelligent Transport Systems operating in the 5 GHz band&rdquo;.</p>
+<p class="EX">[2]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ETSI EN 302 571 (V1.2.0): &ldquo;Intelligent Transport Systems (ITS); Radio communications equipment operating in the 5855 MHz to 5925 MHz frequency band; Harmonized EN covering the essential requirements of article 3.2 of the R&amp;TTE directive&rdquo;.</p>
+</section>
+<section>
+<h2 id="hdr-p1pxg88rke3db">Informative references</h2>
+<p class="EX">[i.1]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ETSI TS 102 636-4-2 (V1.1.1): &ldquo;Intelligent Transport Systems (ITS); Vehicular Communications; GeoNetworking; Part 4: Geographical addressing and forwarding for point-to-point and point-to-multipoint communications; Sub-part 1: Media-Dependent Functionality&rdquo;.</p>
+<p class="EX">[i.2]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Draft ETSI TS 103&nbsp;141 (V0.0.1): &ldquo;Intelligent Transport Systems (ITS); Facilities layer; Communication Congestion Control&rdquo;.</p>
+<p class="EX">[i.3]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Draft ETSI TS 103&nbsp;175: &ldquo;Intelligent Transport Systems (ITS); Cross layer DCC management entity for operation in the ITS G5A and ITS G5B medium&rdquo;.</p>
+<p class="EX">[i.4]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IEEE Std. 802.11-2012: "IEEE Standard for Information technology - Telecommunications and information exchange between systems - Local and metropolitan area networks-Specific requirements - Part 11: Wireless LAN Medium Access Control (MAC) and Physical Layer (PHY) Specifications".</p>
+<p class="EX">[i.5]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IEEE Std. 802.11k-2008: &ldquo;IEEE Standard for Information technology - Telecommunications and information exchange between systems - Local and metropolitan area networks-Specific requirements - Part 11: Wireless LAN Medium Access Control (MAC) and Physical Layer (PHY) Specifications &ndash; Amendment 1: Radio Resource Measurement of Wireless LANs". Classified as superseded.</p>
+<p class="EX">[i.5]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; J. B. Kenney, G. Bansal, and C. E. Rohrs, &ldquo;LIMERIC: A Linear Message Rate Control Algorithm for Vehicular DSRC Systems,&rdquo; in Proceedings of the Eighth ACM International Workshop on Vehicular Inter-Networking (VANET &rsquo;11), 2011, pp. 21&ndash;30.</p>
+</section>
+</section>
+<section>
+<h1 id="hdr-gpoh3t9uhlt6m">Definitions, symbols and abbreviations</h1>
+<section>
+<h2 id="hdr-5eo7vmrob1yew">Definitions</h2>
+<p><strong>example 1:</strong> text used to clarify abstract rules by applying them literally</p>
+<p class="NO">NOTE: This may contain additional information.</p>
+</section>
+<section>
+<h2 id="hdr-mple4zot1eu8e">Symbols</h2>
+<p>For the purposes of the present document, the [following] symbols [given in ... and the following] apply:</p>
+<p class="EW">&lt;symbol&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;Explanation&gt;</p>
+<p class="EW">&lt;2<sup>nd</sup> symbol&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;2<sup>nd</sup> Explanation&gt;</p>
+<p class="EX">&lt;3<sup>rd</sup> symbol&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;3<sup>rd</sup> Explanation&gt;</p>
+</section>
+<section id="abbreviations">
+<h2 id="hdr-pp4zjvpoqwcwp">Abbreviationsddd</h2>
+<p class="EW"><abbr>AC</abbr>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Access Category</p>
+<p class="EW">AC_BE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AC best effort</p>
+<p class="EW">AC_BK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AC background</p>
+<p class="EW">AC_VI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AC video</p>
+<p class="EW">AC_VO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AC voice</p>
+<p class="EW">AIFS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Arbitration InterFrame Space</p>
+<p class="EW">CAM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cooperative Awareness Message</p>
+<p class="EW">CCA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Clear Channel Assessment</p>
+<p class="EW">CBR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Channel Busy Ratio</p>
+<p class="EW">CCH&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Control Channel</p>
+<p class="EW">CS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Carrier Sense</p>
+<p class="EW">CW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Contention Window</p>
+<p class="EW"><abbr title="Decentralized Congestion Control">DCC</abbr>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Decentralized Congestion Control</p>
+<p class="EW">DCC_access&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DCC component of the access layer</p>
+<p class="EW">DCC_fac&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DCC component of the facilities layer</p>
+<p class="EW">DCC_mgmt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DCC component of the management layer</p>
+<p class="EW">DCC_net&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DCC component of the network layer</p>
+<p class="EW">DENM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Decentralized Environmental Notification Message</p>
+<p class="EW">ITS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Intelligent Transport Systems</p>
+<p class="EW">ITS-S&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ITS Station</p>
+<p class="EW">MAC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Medium Access Control</p>
+<p class="EW">NAV&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Network Allocator Vector</p>
+<p class="EW">PER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Packet Error Rate</p>
+<p class="EW">TC ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Traffic Class Identification</p>
+</section>
+</section>
+<section>
+<h1 id="hdr-2r2xmmmv7aebz">Decentralized congestion control overview</h1>
+<section>
+<h2 id="hdr-owq2j2ksqykvq">Introduction</h2>
+<p>The main objective with the present document is to specify a decentralized congestion control (<abbr title="Decentralized Congestion Control">DCC</abbr>) algorithm that can work with any networking &amp; transport layer protocol. The algorithm outlined in Clause 5 is independent of the access layer technology and the protocols on networking &amp; transport layer. The outcome of the algorithm will be used for a gate-keeping functionality at the access layer described in Clause 6 and this is tailored towards the access technology ITS-G5 [1], where the different queues offered by the medium acess control (<abbr title="Medium Acess Control">MAC</abbr>) algorithm is utilized for prioritization. And also we can test the must and must not words here.</p>
+</section>
+<section>
+<h2 id="hdr-gr1onucz56hdu">DCC operational requirements</h2>
+<p>DCC is a mandatory component of ITS-G5 stations [1] operating in ITS-G5A, ITS-G5B, and ITS-G5D frequency bands [2]. DCC aims at maximizing channel utilization based on the resource requirements of individual ITS stations (<abbr title="Intelligent Transport Systems Station">ITS-S</abbr>).</p>
+<p>The DCC on the access layer has following operational requirements:</p>
+<ul>
+<li>Keep the channel load at a predefined threshold during high network utilization periods to leave room for emergency messages</li>
+<li>Allow for higher message rates during low network utilization periods, which can be found when few ITS-Ss are co-located such as in rural areas</li>
+</ul>
+<p>The outlined algorithm in present document, applies to any higher-layer protocol, i.e., not specific to certain networking &amp; transport protocols.</p>
+</section>
+<section>
+<h2 id="hdr-76dgdnae88ltv">DCC architecture</h2>
+<p>The DCC architecture is shown in . It consists of the following DCC components:</p>
+<ul>
+<li><strong><em>DCC_access</em></strong> located in the access layer,</li>
+<li><strong><em>DCC_net</em></strong> located in the networking &amp; transport layer,</li>
+<li><strong><em>DCC_fac</em></strong> located in the facilities layer, and</li>
+<li><strong><em>DCC_mgmt</em></strong> located in the management layer.</li>
+</ul>
+<p>The <strong><em>DCC_access</em></strong> component is specified in the present document and belongs to a DCC framework covering all parts of the architecture. The following documents specify the other components; <strong><em>DCC_net</em></strong> [i.1], <strong><em>DCC_fac</em></strong> [i.2], and <strong><em>DCC_mgmt</em></strong> [i.3].</p>
+<figure id="fig-dcc-architect"><img src=".data/image001.gif" alt="" width="543" height="329" border="0" />
+<figcaption>DCC Architecture</figcaption>
+</figure>
+</section>
+<section>
+<h2 id="hdr-y4g47ow9rob90">Access layer architecture</h2>
+<p>The internal</p>
+</section>
+</section>
+<section>
+<h1 id="hdr-vb7mi1r0ucosm">Decentralized congestion control algorithm</h1>
+<section>
+<h2 id="hdr-8eavjmubknmoo">General rules</h2>
+<p>The DCC algorithm is subject to the following general rules:</p>
+<ul type="disc">
+<li>The algorithm shall run on each frequency channel specified in EN&nbsp;302&nbsp;571 [2] independently.</li>
+<li>The algorithm shall run in an infinite loop.</li>
+<li>The algorithm shall be activated every channel busy ratio (CBR) interval, <em>T_CBR</em>.</li>
+</ul>
+</section>
+<section>
+<h2 id="hdr-rjcskdsbnmb60">Channel busy ratio assessment</h2>
+<p>The CBR assessment is achieved through a function already available in IEEE Std. 802.11-2012 [i.4], and the access layer technology ITS-G5 [1] is relying on IEEE Std. 802.11-2012. The CBR assessment is based on the physical carrier sense (CS) part called clear channel assessment (CCA), see Clause 18.3.6 in [4]. The CCA shall be the source for assessing if the channel is busy or not. The CCA is using a service primitive called PHY_CCA.indication for conveying the status of the wireless channel to the MAC layer.</p>
+<p>The local perceived CBR,<em> CBR_L_0_Hop</em>, shall be calculated according to <a href="#eq-1">Eq. 1</a></p>
+<div id="eq-1" class="equation"><em>CBR_L_0_Hop</em> = <em>T_CCA_BUSY</em> / <em>T_CBR</em></div>
+<p>Where <em>T_CCA_BUSY</em> is the time the channel was busy according to the PHY_CCA.indication during the <em>T_CBR</em>.</p>
+</section>
+<section>
+<h2 id="hdr-79kzbxiwfmc7x">Algorithm</h2>
+<p>The DCC algorithm is triggered every time a new new value of the CBR parameter <em>CBR_L_0_Hop</em> is delivered from the chipset, i.e., every T_CBR. The global CBR, CBR_G, is received from the GeoNetworking protocol the media-dependent part [i.1]. In <a href="#eq-2">Eq.2</a>, the CBR used for the DCC algorithm, CBR_DCC, in the access layer is achieved:</p>
+<div id="eq-2" class="equation"><em>CBR_DCC</em> = max(<em>CBR_L_0_Hop</em>, <em>CBR_G</em>)</div>
+<p class="NO">NOTE 1: &nbsp; If the GeoNetworking protocol is not present at the networking &amp; transport layer, the <em>CBR_G</em> is set 0. Thus, only the local <em>CBR</em>, <em>CBR_L_0_Hop</em>, is available.</p>
+<p>When the <em>CBR_DCC</em> has been calculated, the DCC algorithm shall be executed and the outcome of the algorithm is updated values on the two following parameters: <em>ego_target_rate</em> and <em>T_GenPacket_DCC</em>. They are provided to the management (Mangament Information Base, MIB) and they are used at higher layers for data traffic shaping. The <em>T_GenPacket_DCC</em> is used for data traffic shaping, see Clause 6.</p>
+<p>The DCC algorithm is executed using rate and not the CBR. The rate is given in messages/second, i.e., Hz. CBR can be converted to messages/second by utilizing the fact that the messages have an average size of 400 bytes transmitted at the default rate 6 Mbps (given the Cooperative Awareness Messages, CAM, and Decentralized Environmental Notification Messages (DENM) dissemination). Then a 100% CBR corresponds to 2000 messages/second [i.5]. In <a href="#eq-3">Eq. 3, the conversion between rate and CBR is given,</a></p>
+<div id="eq-3" class="equation"><em>r</em> = <em>CBR_DCC</em> * 2000</div>
+<p>The DCC algorithm is as follows [i.6],</p>
+<div id="eq-4" class="equation">
+<p><img src=".data/image002.gif" alt="" width="387" height="28" border="0" /></p>
+</div>
+<p>&gt;where <em>r<sub>j</sub></em> is the ego ITS-S&rsquo; rate (i.e., <em>ego_target_rate</em>), <em>r<sub>g</sub></em> is the <em>target_rate</em> (i.e., the aggregated rate), <em>X</em> is set to 1, <em>&alpha;</em> is set to 0.1 [i.5], and &beta; is set to 1/150. The selection of the values of <em>X</em>, &alpha; and &beta; and the rational behind thereof is given in [i.5]. Further in [i.5], the stability of the DCC algorithm in <a href="#eq-4">Eq. 4</a> is proven. In Table 2, a conversion between the CBR necessary to use in <a href="#eq-4">Eq. 4</a> and rate is given. The <em>target_rate</em>, <em>r<sub>g</sub></em>, is selected to maximize throughput (successful reception of packets per second) while keeping the packet error rate (PER) at reasonable level due to interference.</p>
+<table class="bordered centered"><caption>Table 2: Conversion and interpretation of <a href="#eq-4">Eq. 4</a></caption>
+<tbody>
+<tr>
+<th class="centered">Parameter</th>
+<th class="centered">Conversion</th>
+<th class="centered">Description</th>
+</tr>
+<tr>
+<td class="centered"><em>r<sub>j</sub></em></td>
+<td class="centered">n/a</td>
+<td>This is the <em>ego_target_rate</em> parameter for the ego ITS-S that is currently allowed, which is the reciprocal of <em>T_GenPacket_DCC</em> (i.e., <em>T_GenPacket_DCC</em> = 1 / <em>ego_target_rate</em>)</td>
+</tr>
+<tr>
+<td class="centered"><em>r<sub>g</sub></em></td>
+<td class="centered"><em>CBR_maximum</em>*2000</td>
+<td>The aggregated <em>target_rate</em>, i.e., the overall rate for all vehicles.</td>
+</tr>
+<tr>
+<td class="centered"><em>r</em></td>
+<td class="centered"><em>CBR_G</em> * 2000</td>
+<td>Highest perceived rate by the ego ITS-S currently, i.e., highest perceived CBR by a local ITS station.</td>
+</tr>
+</tbody>
+</table>
+<p>In <a href="#fig-dcc-overview">Figure XX</a>, the operation of the DCC algorithm is depicted.</p>
+<figure id="fig-dcc-overview"><img src=".data/image003.gif" alt="" width="128" height="438" border="0" />
+<figcaption>A schematic overview of the DCC algorithm executed in the access layer</figcaption>
+</figure>
+<p>In summary, the DCC algorithm takes the calculated <em>CBR_DCC</em> as input and output one parameter <em>target_rate</em>, which can be converted to <em>T_GenPacket_DCC</em> (reciprocal of <em>ego_target_rate</em>).</p>
+<p>The <em>T_GenPacket_DCC</em> is specified as the minimum time between generations of packets [i.5]. In <a href="#eq-5">Eq. 5</a>, the conversion between <em>ego_target_rate</em> and <em>T_GenPacket_DCC</em> is given,</p>
+<div id="eq-5" class="equation">
+<p><em>T_GenPacket_DCC</em> = 1 / <em>ego_target_rate</em>.</p>
+</div>
+</section>
+</section>
+<section>
+<h1 id="hdr-7a7p15vme7cu6">Data traffic shaping</h1>
+<section>
+<h2 id="hdr-yz0vcsyrudpa8">Introduction</h2>
+<p>In the future it would be beneficial that ITS applications, which are responsible for generation of packets in ITS stations, could adapt to the current status of the channel. This to avoid generation of packets that eventually are not transmitted due to a busy channel. Further, this would increase the awareness of the ITS applications, by sending packets at a rate that maximizes throughput (successful packet receptions per second). Further, it would leave the control to prioritize between different ITS applications to the source.</p>
+<p class="NO">NOTE 1: &nbsp; Currently only the CAM generation in the facilities layer can be restricted via the parameter <em>T_GenCam_Dcc</em> and there is no possibility to control the DENMs except for at lower layers by using a gate-keeping function.</p>
+<p>There is one parameter specified in present document called <em>T_GenPacket_DCC</em>, that will have the functionality of gate-keeping at the access layer. This parameter is an output from the DCC algorithm described in Clause 5. The gate-keeping functionality implies that only when allowed packets will be put into one of the queues at the medium access control (MAC) layer, i.e., queue access. The <em>T_GenPacket_DCC</em> is defined as the time that needs to elapse before the ITS station is allowed to put a new packet into one of the MAC queues. By using the gate-keeping functionality only one at most two packets will be in the MAC queues at the same time.</p>
+</section>
+<section>
+<h2 id="hdr-epd59gs56vhi2">Gate-keeping</h2>
+<p>There are four different queues in the MAC layer [2] providing means of prioritization between packets and the default parameters of the queues are given in Table 3 [1]. The listening period is called Arbitration Interframe Space (AIFS), the contention window (CW) is used for the backoff procedure, and the access category (AC) is the different queues. The highest priority is AC voice (AC_VO), followed by AC video (AC_VI), AC best effort (AC_BE), and lowest priority AC background (AC_BK). The highest priority has the shortest AIFS and smallest CW. Details of the MAC procedure in ITS-G5 [2] are given in informative Annex B of EN&nbsp;302&nbsp;663 [2].</p>
+<table class="bordered centered"><caption>Table 3: The resulting AIFS and CW sizes for 802.11p's ACs</caption>
+<tbody>
+<tr>
+<th>AC</th>
+<th>CW<sub>min</sub></th>
+<th>CW<sub>max</sub></th>
+<th>AIFS</th>
+</tr>
+<tr>
+<th>AC_VO</th>
+<td>3</td>
+<td>7</td>
+<td>58 &micro;s</td>
+</tr>
+<tr>
+<th>AC_VI</th>
+<td>7</td>
+<td>15</td>
+<td>71 &micro;s</td>
+</tr>
+<tr>
+<th>AC_BE</th>
+<td>15</td>
+<td>1 023</td>
+<td>110 &micro;s</td>
+</tr>
+<tr>
+<th>AC_BK</th>
+<td>15</td>
+<td>1 023</td>
+<td>149 &micro;s</td>
+</tr>
+</tbody>
+</table>
+<p>The parameter <em>T_GenPacket_DCC</em> shall be used at the access layer for gate-keeping, i.e., <em>T_GenPacket_DCC</em> determines when the next packet is allowed to be put in one of the queues at the MAC layer.</p>
+<p>NOTE 2:&nbsp;&nbsp; Once a packet has been put into one of the MAC queues, it cannot be revoked, therefore, it is necessary to have the gate-keeping functionality just above the MAC layer.</p>
+<p>In Figure 3, the gate-keeping functionality is outlined, where <em>t</em> is the current time, <em>t_next_packet</em> is the point in time when the next packet is allowed to be put into one of the MAC queues (queue access), <em>AC_VO</em> is the highest priority queue in the MAC layer, <em>emergency_flag</em> is used to allow one <em>AC_VO</em> packet to be transmitted during every <em>T_GenPacket_DCC </em>period to cope with emergency messages (i.e., even though that <em>t_next_packet</em> is not allowing a queue access this can be overridden once every <em>T_GenPacket_DCC </em>period for emergency messages to decrease the delay).</p>
+<figure><img src=".data/image004.gif" alt="" width="367" height="797" border="0" />
+<figcaption>Gate-keeping functionality at the access layer</figcaption>
+</figure>
+</section>
+</section>
+<section class="appendix normative">
+<h2 id="hdr-96c0px6n57xev">Annex &lt;A&gt; (normative)<br />Title of normative annex</h2>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+</section>
+<section class="appendix informative">
+<h2 id="hdr-uesloz6s0h3yl">Annex &lt;XX&gt; (informative)<br />Title of informative annex</h2>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<table border="1" cellspacing="0" cellpadding="0">
+<thead>
+<tr>
+<td width="104">
+<p class="TAH">date</p>
+</td>
+<td width="54">
+<p class="TAH">Version</p>
+</td>
+<td width="480">
+<p class="TAH">Information about changes</p>
+</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="104">
+<p class="TAL">July 2011</p>
+</td>
+<td width="54">
+<p class="TAC">v1.1.1</p>
+</td>
+<td width="480">
+<p class="TAL">First publication of the TS</p>
+</td>
+</tr>
+<tr>
+<td width="104">&nbsp;</td>
+<td width="54">&nbsp;</td>
+<td width="480">&nbsp;</td>
+</tr>
+<tr>
+<td width="104">&nbsp;</td>
+<td width="54">&nbsp;</td>
+<td width="480">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="appendix informative">
+<h1 id="hdr-0e2t2awkzltgg">Annex XY (informative):<br /> Bibliography</h1>
+<p>&middot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;Publication&gt;: "&lt;Title&gt;".</p>
+<p>OR</p>
+<p>&lt;Publication&gt;: "&lt;Title&gt;".</p>
+</section>
+<section>
+<h1 id="hdr-7vmvs9p0jy7s0">History</h1>
+<p>&nbsp;</p>
+<div>
+<table border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td colspan="3" width="643">
+<p><strong>Document history</strong></p>
+</td>
+</tr>
+<tr>
+<td width="83">
+<p class="FP">V1.1.2</p>
+</td>
+<td width="106">
+<p class="FP">September 2013</p>
+</td>
+<td width="454">
+<p class="FP">First version of the revision of TS 102 687</p>
+</td>
+</tr>
+<tr>
+<td width="83">&nbsp;</td>
+<td width="106">&nbsp;</td>
+<td width="454">&nbsp;</td>
+</tr>
+<tr>
+<td width="83">&nbsp;</td>
+<td width="106">&nbsp;</td>
+<td width="454">&nbsp;</td>
+</tr>
+<tr>
+<td width="83">&nbsp;</td>
+<td width="106">&nbsp;</td>
+<td width="454">&nbsp;</td>
+</tr>
+<tr>
+<td width="83">&nbsp;</td>
+<td width="106">&nbsp;</td>
+<td width="454">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</body>
+<html>    </textarea>
 </form>
 <div>
 <form method="post">
