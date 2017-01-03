@@ -11,8 +11,7 @@
 /*global tinymce:true */
 
 define("tinymce/plugins/localfile", [
-	"tinymce/util/URI"
-], function(URI) {
+], function() {
 
 tinymce.PluginManager.add('localfile', function(editor) {
 
@@ -50,7 +49,7 @@ tinymce.PluginManager.add('localfile', function(editor) {
 	function hSaveAs() {
 		editor.windowManager.open({
 			title: 'Document Name',
-			body: { type: 'textbox', name: 'name', size: 40, label: 'Name', value: _file ? _file : '' },
+			body: {type: 'textbox', name: 'name', size: 40, label: 'Name', value: _file ? _file : ''},
 			onsubmit: function(e) {
 				var fname = e.data.name;
 				// add .html if necessary
@@ -76,11 +75,10 @@ tinymce.PluginManager.add('localfile', function(editor) {
 					r = decoder.decode(dataView);
 					var encs = r.match(/<meta\s+http-equiv=Content-Type.*charset=([\w\-]*)/);
 					if (encs && encs[1] && !(encs[1] in ["unicode-1-1-utf-8", "utf-8", "utf8"])) {
-						decoder =  new TextDecoder(encs[1]);
+						decoder = new TextDecoder(encs[1]);
 						r = decoder.decode(dataView);
 					}
 				}
-//				editor.setContent('');
 				editor.setContent(r);
 				editor.undoManager.clear();
 				_file = theFile.name;
@@ -99,19 +97,7 @@ tinymce.PluginManager.add('localfile', function(editor) {
 			break;
 		}
 	}
-/*
-	function handleFileSave(evt) {
-		var files = evt.target.files;
-		for (var i = 0, f; (f = files[i]); i++) {
-			// Only process text and html files.
-			if (!f.type.match('text.*')) {
-				continue;
-			}
-			saveToFile(f);
-			break;
-		}
-	}
-*/
+
 	function saveToFile(f) {
 		var doc = new Blob([editor.save()], {type: 'text/html'});
 		var a = document.createElement('a');

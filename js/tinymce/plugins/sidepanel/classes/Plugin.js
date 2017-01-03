@@ -34,14 +34,14 @@ var getElementSize = function(elm) {
 };
 
 tinymce.PluginManager.add('sidepanel', function(editor, url) {
-	var settings = editor.settings;
-	var self = this;
 	var panels = {};
 	var container;
-	var area; 
+	var area;
 
 	// We don't support older browsers like IE6/7 and they don't provide prototypes for DOM objects
-	if (!window.NodeList) return;
+	if (!window.NodeList) {
+		return;
+	}
 
 	// load CSS
 	tinymce.DOM.styleSheetLoader.load(url + '/css/sidepanel.css');
@@ -52,14 +52,14 @@ tinymce.PluginManager.add('sidepanel', function(editor, url) {
 		container = theme.panel;
 
 		// rearrange elements in panel items
-		container.items().each(function(p){
-			if(p.name() === 'iframe'){
+		container.items().each(function(p) {
+			if (p.name() === 'iframe') {
 				var n = tinymce.ui.Factory.create(
-					{type: 'container', name: 'panels-container', style:'position:relative;',layout: 'stack', items: [
+					{type: 'container', name: 'panels-container', style:'position:relative;', layout: 'stack', items: [
 						p,
 						{type: 'container', name: 'left-panel-container', classes: 'side-panel-container left', laytout:'stack', width:100, hidden:true, items:[
 							{type: 'sidepanelheader', name: 'left-panel', layout:'stack', classes:'tabpanel'},
-							{type: 'control', name: 'panel-handler', layout: 'stack', classes: 'resize-handler', html:''},
+							{type: 'control', name: 'panel-handler', layout: 'stack', classes: 'resize-handler', html:''}
 						]},
 						{type: 'container', name: 'right-panel-container', classes: 'side-panel-container right', laytout:'stack', width:100, hidden:true, items:[
 							{type: 'sidepanelheader', name: 'right-panel', layout: 'stack', classes:'tabpanel'},
@@ -71,23 +71,23 @@ tinymce.PluginManager.add('sidepanel', function(editor, url) {
 				area = p;
 			}
 		});
-		panels['left']  = container.find('#left-panel')[0];
-		panels['right'] = container.find('#right-panel')[0];
+		panels.left = container.find('#left-panel')[0];
+		panels.right = container.find('#right-panel')[0];
 
 		var rhandlers = container.find('#panel-handler');
-		rhandlers.on('postrender', function(e){
-			var h    = e.control;
+		rhandlers.on('postrender', function(e) {
+			var h = e.control;
 			var cntr = h.parent();
 			var side;
 
 			side = 'left';
-			if(!cntr._name.startsWith(side)){
+			if (!cntr._name.startsWith(side)) {
 				side = 'right';
-				if(!cntr._name.startsWith(side)){
+				if (!cntr._name.startsWith(side)) {
 					return;
 				}
 			}
-			
+
 			h.resizeDragHelper = new tinymce.ui.DragHelper(h._id, {
 				start: function() {
 					h.resizeDragHelper.startDragW = getElementSize(cntr.getEl()).width;
@@ -95,12 +95,12 @@ tinymce.PluginManager.add('sidepanel', function(editor, url) {
 				drag: function(e) {
 					var w, maxWidth, minWidth;
 					var side = h.resizeDragHelper.side;
-					maxWidth = parseInt(DOMUtils.DOM.getStyle(cntr.getEl(),'max-width', true), 10) || cntr.parent().layoutRect().w;
-					minWidth = parseInt(DOMUtils.DOM.getStyle(cntr.getEl(),'min-width', true), 10) || 0;
+					maxWidth = parseInt(DOMUtils.DOM.getStyle(cntr.getEl(), 'max-width', true), 10) || cntr.parent().layoutRect().w;
+					minWidth = parseInt(DOMUtils.DOM.getStyle(cntr.getEl(), 'min-width', true), 10) || 0;
 					w = h.resizeDragHelper.startDragW + e.deltaX;
-					if(w < maxWidth && w > minWidth) {
+					if (w < maxWidth && w > minWidth) {
 						DOMUtils.DOM.setStyle(cntr.getEl(), 'width', w + 'px');
-						DOMUtils.DOM.setStyle(area.getEl(),'margin-'+side, w + 'px');
+						DOMUtils.DOM.setStyle(area.getEl(), 'margin-' + side, w + 'px');
 					}
 				},
 				stop: function() {}
@@ -111,8 +111,8 @@ tinymce.PluginManager.add('sidepanel', function(editor, url) {
 
 	editor.on("AddSidePanel", function(args) {
 		var side, panel, cntr;
-		side  = (args['side'] && args['side'] == 'right') ? 'right' : 'left';
-		panel = args['panel'] || args['item'];
+		side = (args.side && args.side == 'right') ? 'right' : 'left';
+		panel = args.panel || args.item;
 		panel.classes.add('side-panel');
 
 		panels[side].append(panel).reflow();
@@ -120,39 +120,44 @@ tinymce.PluginManager.add('sidepanel', function(editor, url) {
 		// hack to add tabpanel header
 		var header = panels[side].getEl('head');
 		var h = DOMUtils.DOM.createFragment(panels[side].renderHtml()).firstChild.firstChild;
-		if(h.id == header.id){
+		if (h.id == header.id) {
 			header.innerHTML = h.innerHTML;
 		}
-		panels[side].activateTab(panels[side].items().length-1);
+		panels[side].activateTab(panels[side].items().length - 1);
 
 		cntr = panels[side].parent();
-		if(!cntr.visible()){
+		if (!cntr.visible()) {
 			cntr.show();
 			var w = cntr.layoutRect().w;
-			DOMUtils.DOM.setStyle(area.getEl(),'margin-'+side, w + 'px');
+			DOMUtils.DOM.setStyle(area.getEl(), 'margin-' + side, w + 'px');
 		}
 	});//AddSidePanel
-	
+
 	editor.on("DeleteSidePanel", function(args) {
 		var name, panel, side;
-		if(args['name']) name = args.name;
-		else if(args['panel']){
+		if (args.name) {
+			name = args.name;
+		} else if (args.panel) {
 			name = args.panel.name();
-		}else if(args['item']){
+		} else if (args.item) {
 			name = args.item.name();
-		}else return;
+		} else {
+			return;
+		}
 
 		side = 'left';
-		panel = panels[side].find('#'+name)[0];
-		if(!panel) {
+		panel = panels[side].find('#' + name)[0];
+		if (!panel) {
 			side = 'right';
-			panel = panels[side].find('#'+name)[0];
-			if(!panel) return;
+			panel = panels[side].find('#' + name)[0];
+			if (!panel) {
+				return;
+			}
 		}
 		panel.remove();
-		if(panels[side].items().length == 0){
+		if (panels[side].items().length == 0) {
 			panels[side].parent().hide();
-			DOMUtils.DOM.setStyle(area.getEl(),'margin-'+side, '0px');
+			DOMUtils.DOM.setStyle(area.getEl(), 'margin-' + side, '0px');
 		}
 	});//DeleteSidePanel
 }); // tinymce.PluginManager.add

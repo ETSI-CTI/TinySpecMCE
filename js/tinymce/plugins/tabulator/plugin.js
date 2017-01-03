@@ -11,7 +11,7 @@
 /*global tinymce:true */
 
 tinymce.PluginManager.add('tabulator', function(editor) {
-	editor.on('keydown', function(ev){
+	editor.on('keydown', function(ev) {
 		if (ev.keyCode == 9) { // tab pressed
 			editor.execCommand('mceInsertContent', false, '&emsp;&emsp;');
 			ev.preventDefault();
