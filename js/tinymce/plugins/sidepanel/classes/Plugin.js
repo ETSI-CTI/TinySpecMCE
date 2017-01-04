@@ -57,11 +57,11 @@ tinymce.PluginManager.add('sidepanel', function(editor, url) {
 				var n = tinymce.ui.Factory.create(
 					{type: 'container', name: 'panels-container', style:'position:relative;', layout: 'stack', items: [
 						p,
-						{type: 'container', name: 'left-panel-container', classes: 'side-panel-container left', laytout:'stack', width:100, hidden:true, items:[
+						{type: 'container', name: 'left-panel-container', classes: 'side-panel-container left', laytout:'stack', width:300, hidden:true, items:[
 							{type: 'sidepanelheader', name: 'left-panel', layout:'stack', classes:'tabpanel'},
 							{type: 'control', name: 'panel-handler', layout: 'stack', classes: 'resize-handler', html:''}
 						]},
-						{type: 'container', name: 'right-panel-container', classes: 'side-panel-container right', laytout:'stack', width:100, hidden:true, items:[
+						{type: 'container', name: 'right-panel-container', classes: 'side-panel-container right', laytout:'stack', width:300, hidden:true, items:[
 							{type: 'sidepanelheader', name: 'right-panel', layout: 'stack', classes:'tabpanel'},
 							{type: 'control', name: 'panel-handler', layout: 'stack', classes: 'resize-handler', html:''}
 						]}
