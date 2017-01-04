@@ -105,6 +105,9 @@ tinymce.PluginManager.add('fullscreen', function(editor) {
 
 	editor.on('init', function() {
 		editor.addShortcut('Ctrl+Shift+F', '', toggleFullscreen);
+		if(editor.settings.fullscreen){
+		  setTimeout(toggleFullscreen, 0.5);
+		}
 	});
 
 	editor.on('remove', function() {

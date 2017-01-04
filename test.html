@@ -14,8 +14,8 @@ tinymce.init({
     plugins: [
          "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
          "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-         "localfile table contextmenu directionality emoticons template paste textcolor sidepanel navpanel typograf",
-         "tabulator respec abbreviations"
+         "localfile table contextmenu directionality emoticons template paste textcolor sidepanel respec inlines abbreviations navpanel typograf",
+         "tabulator"
    ],
    toolbar: "insertfile undo redo | styleselect | bold italic forecolor backcolor| alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | abbr link image | print preview fullpage docproperties", 
    style_formats: [
@@ -31,18 +31,19 @@ tinymce.init({
    file_browser_callback : 'myFileBrowser',
    navpanel_show_on_start: true,
    abbrpanel_show_on_start: true,
+   fullscreen: true,
    image_advtab: true
- });
+});
 
-  tinymce.each(tinymce.editors, function(e){
-  	e.on('savecontent', function(e){
-  		console.log('savecontent');
-  	});
+tinymce.each(tinymce.editors, function(e){
+  e.on('savecontent', function(e){
+    console.log('savecontent');
   });
+});
 
-  function handleFileSelect(evt) {
-    var files = evt.target.files;
-  }
+function handleFileSelect(evt) {
+  var files = evt.target.files;
+}
 
 function myFileBrowser (field_name, url, type, win) {
    // Check for the various File API support.
@@ -54,6 +55,7 @@ function myFileBrowser (field_name, url, type, win) {
    // alert("Field_Name: " + field_name + "nURL: " + url + "nType: " + type + "nWin: " + win); // debug/testing
    return false;
 }
+
 </script>
 </head>
 
