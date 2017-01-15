@@ -1,0 +1,32 @@
+.mce-ref-panel {
+  background: #ffffff;
+  overflow-x: hidden;
+}
+
+.mce-ref-panel ul {
+}
+
+.mce-ref-panel li {
+  list-style-type: none;
+  cursor: pointer;
+}
+.mce-ref-panel li.current {
+  background:lightgrey;
+}
+
+.mce-ref-panel cite{
+  margin-right:10px;
+  font-style: italic;
+  font-weight: bold;
+  display:inline-block;
+  overflow-x:hidden;
+}
+.mce-ref-panel span.informative {
+  float:right;
+  font:smaller;
+  color:grey;
+}
+
+cite.selected {
+  background-color:yellow;
+}
