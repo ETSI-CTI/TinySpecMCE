@@ -73,12 +73,14 @@ tinymce.PluginManager.add('inlines', function(editor, url) {
 		if(!modKey && (keyCode < 16 || keyCode == 32 || (keyCode > 40 && keyCode < 91) || keyCode > 93)){
 			console.log(e);
 			var txt = editor.selection.getRng().startContainer;
-			for (var m = 0; m < submodules.length; m++) {
-				var subm = submodules[m];
-				if(subm.processTextNode) {
-					var df = subm.processTextNode(editor, txt);
-					if(df){
-						txt.parentNode.replaceChild(df, txt);
+			if(txt.nodeType == 3){ // text
+				for (var m = 0; m < submodules.length; m++) {
+					var subm = submodules[m];
+					if(subm.processTextNode) {
+						var df = subm.processTextNode(editor, txt);
+						if(df){
+							txt.parentNode.replaceChild(df, txt);
+						}
 					}
 				}
 			}
