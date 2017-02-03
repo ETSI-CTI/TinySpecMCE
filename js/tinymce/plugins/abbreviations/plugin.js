@@ -59,6 +59,9 @@ tinymce.PluginManager.add('abbreviations', function(editor, url) {
 
 		// load from abbreviations 
 		var abbrSection = dom.select('#abbreviations')[0];
+		if (!abbrSection) {
+			abbrSection = dom.select('section:has(:header:contains("Abbreviations"))')[0];
+		}
 		if (abbrSection) {
 			list = dom.select('p,li', abbrSection);
 			for (var i = 0, l = list.length; i < l; i++) {
@@ -71,7 +74,10 @@ tinymce.PluginManager.add('abbreviations', function(editor, url) {
 				if (abbr > 0) {
 					title = t.substring(abbr).trim();
 					abbr = t.substring(0, abbr);
-					abbrMap[abbr] = title;
+					// skip first item if it is just a text
+					if(i > 0 || abbr.match(/^[A-Z_0-9]+$/)) {
+						abbrMap[abbr] = title;
+					}
 				}
 			}
 			dom.$(abbrSection).remove();
@@ -83,6 +89,7 @@ tinymce.PluginManager.add('abbreviations', function(editor, url) {
 		}else{
 			abbrRx = null;
 		}
+		updatePanel();
 	});
 
 	function processTextNode(editor, txt) {
@@ -229,8 +236,8 @@ tinymce.PluginManager.add('abbreviations', function(editor, url) {
 		return li;
 	}
 	function allignAbbrPanel() {
-        	var dom = editor.dom;
         	if(panel) {
+	        	var dom = editor.dom;
 			var alist = dom.$('abbr', panel.getEl());
 			var width = 0;
 			for(var i=0; i<alist.length; i++) {
@@ -242,6 +249,23 @@ tinymce.PluginManager.add('abbreviations', function(editor, url) {
 				alist.css('width', width+'px');
 			}
 		}
+	}
+
+	function updatePanel() {
+		if(panel){
+			var dom = editor.dom;
+			dom.$('ul', panel.getEl()).remove();
+
+        		var ul = dom.doc.createElement('ul');
+	        	var abbrs = Object.keys(abbrMap).sort();
+        		tinymce.each(abbrs, function(abbr) {
+        			var title = abbrMap[abbr];
+        			var li = createPanelItem(abbr, title);
+	                        ul.appendChild(li);
+        		});
+        		panel.getEl().appendChild(ul);
+			allignAbbrPanel();
+        	}
 	}
 
 	editor.addCommand('mceShowAbbrPanel', function () {
@@ -257,19 +281,10 @@ tinymce.PluginManager.add('abbreviations', function(editor, url) {
 			);
 			editor.fire('AddSidePanel', {item: panel, side: 'left'});
 
-			var ul = dom.doc.createElement('ul');
-			var abbrs = Object.keys(abbrMap).sort();
-
-			tinymce.each(abbrs, function(abbr) {
-				var title = abbrMap[abbr];
-				var li = createPanelItem(abbr, title);
-                                ul.appendChild(li);
-			});
-			panel.getEl().appendChild(ul);
+			updatePanel();
 		}
 		editor.focus();
 		editor.fire('AbbrPanelStateChanged', {state: panel ? true : false});
-		allignAbbrPanel();
 	});
 
 	editor.addMenuItem('abbrPanel', {
