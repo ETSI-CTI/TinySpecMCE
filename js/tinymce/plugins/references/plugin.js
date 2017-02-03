@@ -29,11 +29,22 @@ tinymce.PluginManager.add('references', function(editor, url) {
         
         function rxhandler_IEEE(a){
         	return {
-        		org: 'ETSI',
+        		org: 'IEEE',
         		type: 'IEEE',
         		name : 'IEEE ' + a[1] ,
         		reference: a[1],
         		version:a[3],
+        		title : a[4] ? (a[4].replace(/^[:\s]+/u, '').trim()) : undefined
+        	};
+        }
+
+        function rxhandler_ISO(a){
+        	return {
+        		org: 'ISO',
+        		type: 'ISO',
+        		name : 'ISO/IEC ' + a[1] ,
+        		reference: a[1],
+        		version:a[2],
         		title : a[4] ? (a[4].replace(/^[:\s]+/u, '').trim()) : undefined
         	};
         }
@@ -58,22 +69,42 @@ tinymce.PluginManager.add('references', function(editor, url) {
         	return a;
         }
 
+        function complete_ISO(a){
+        	if(a.title === undefined || a.title.length == 0){
+        		a.title = "To be requested...";
+        		// TODO: Launch reference data request
+        	}
+        	// TODO: it will be a real url
+        	a.url = a.name.replace(/\s+/g, '_') + '.pdf';
+        	return a;
+        }
+
         var rxs = [
          	{
-         		rx: /(?:ETSI\s+)?(SR|TR|TS|EG|ES|EN)\s+(\d\d\d\s+\d\d\d(?:-\d+)?(?:-\d+)?)\s*(?:[(-]+?[vV]?(\d+\.\d+\.\d+)\)?)?/u,
+         		rx: /(?:ETSI\s+)?(ETS)\s+(\d\d\d\s+\d\d\d(?:-\d+)?(?:-\d+)?)\s*(?:\([\.\dvV]+\))?/,
+         		rxDetect: '(?:ETSI\\s+)?(?:ETS)\\s+\\d\\d\\d\\s+\\d\\d\\d(?:-\\d+)?(?:-\\d+)?\\s*(?:\\([vV\\d\\.]+\\))?',
+         		handler:rxhandler_ETSI,
+         		complete:complete_ETSI
+         	},{
+         		rx: /(?:ETSI\s+)?(SR|TR|TS|EG|ES|EN)\s+(\d\d\d\s+\d\d\d(?:-\d+)?(?:-\d+)?)\s*(?:[(-]+?[vV]?(\d+\.\d+\.\d+)\)?)?/,
          		rxDetect: '(?:ETSI\\s+)?(?:SR|TR|TS|EG|ES|EN)\\s+\\d\\d\\d\\s+\\d\\d\\d(?:-\\d+)?(?:-\\d+)?\\s*(?:-?\\(?(?:[vV]\\.?)?\\d+\\.\\d+\\.\\d+\\)?)?',
          		handler:rxhandler_ETSI,
          		complete:complete_ETSI
          	},{
-         		rx: /(?:ETSI\s+)?(GR|GS)\s+([A-Z0-9]+(?:-[A-Z0-9]+)?\s+\d+(?:-\d+)?(?:-\d+)?)\s*(?:[(-vV]*(\d+\.\d+\.\d+)\)?)?/u,
+         		rx: /(?:ETSI\s+)?(GR|GS)\s+([A-Z0-9]+(?:-[A-Z0-9]+)?\s+\d+(?:-\d+)?(?:-\d+)?)\s*(?:[(-vV]*(\d+\.\d+\.\d+)\)?)?/,
          		rxDetect: '(?:ETSI\\s+)?(?:GR|GS)\\s+[A-Z0-9]+(?:-[A-Z0-9]+)?\\s+\\d+(?:-\\d+)?(?:-\\d+)?\\s*(?:-?\\(?(?:[vV]\\.?)?\\d+\\.\\d+\\.\\d+\\)?)?',
          		handler:rxhandler_ETSI,
          		complete:complete_ETSI
          	},{
-         		rx: /IEEE(?:\s+Std\.?)?\s+((\d+(?:\.\w+))(?:-(\w+))?)/u,
+         		rx: /IEEE(?:\s+Std\.?)?\s+((\d+(?:\.\w+))(?:-(\w+))?)/,
          		rxDetect: 'IEEE(?:\\s+Std\\.?)?[\\s-]*\\d+(?:\\.\\w+)(?:-\\w+)?',
          		handler:rxhandler_IEEE,
          		complete:complete_IEEE
+         	},{
+         		rx: /ISO(?:\/IEC)?\s+([-\d]+)(?:\s+\((\d+)\))?/,
+         		rxDetect: 'ISO(?:\\/IEC)?\\s+[-\d]+(?:\\s+\\(\d+\\))?',
+         		handler:rxhandler_ISO,
+         		complete:complete_ISO
          	}
         ];
 

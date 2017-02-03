@@ -1,5 +1,5 @@
 # Navigation panel plugin
-## Dependent of _sidepanel_ plugin
+## Depends of [sidepanel](../sidepanel) plugin
 
 Adds Navigation panel (ToC view) to the left side panel
 
