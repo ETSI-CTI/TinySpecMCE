@@ -23,7 +23,7 @@ tinymce.PluginManager.add('references', function(editor, url) {
         		type: a[1],
         		reference: a[2],
         		version:a[3],
-        		title : a[4] ? (a[4].replace(/^[:\s]+/u, '').trim()) : undefined
+        		title : a[4] ? (a[4].replace(/^[:\s]+/, '').trim()) : undefined
         	};
         }
         
@@ -34,7 +34,7 @@ tinymce.PluginManager.add('references', function(editor, url) {
         		name : 'IEEE ' + a[1] ,
         		reference: a[1],
         		version:a[3],
-        		title : a[4] ? (a[4].replace(/^[:\s]+/u, '').trim()) : undefined
+        		title : a[4] ? (a[4].replace(/^[:\s]+/, '').trim()) : undefined
         	};
         }
 
@@ -45,7 +45,7 @@ tinymce.PluginManager.add('references', function(editor, url) {
         		name : 'ISO/IEC ' + a[1] ,
         		reference: a[1],
         		version:a[2],
-        		title : a[4] ? (a[4].replace(/^[:\s]+/u, '').trim()) : undefined
+        		title : a[4] ? (a[4].replace(/^[:\s]+/, '').trim()) : undefined
         	};
         }
 
